@@ -3,9 +3,13 @@ CyberImmune Streamlit App - Three screens for investigation transparency.
 Screen 1: Timeline - events with baseline flags
 Screen 2: Investigation - claims with verification badges
 Screen 3: Evaluation Lab - S1/S2/S3 comparison
+
+DEMO MODE (default): reads cached results from results/final/ (no API keys needed).
+LIVE MODE: optional, requires ENABLE_LIVE=1 env var, rate-limited.
 """
 import json
 import html
+import os
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any, Optional
@@ -26,7 +30,50 @@ from src.schemas import Investigation, ClaimType, ConclusionLabel
 from src.evidence_verifier import verify_investigation
 
 
-# Page config
+# =============================================================================
+# DEMO MODE CONFIGURATION
+# =============================================================================
+# Default to DEMO_MODE=True (no API keys, uses cached results)
+# Set ENABLE_LIVE=1 to enable live LLM calls (rate-limited)
+DEMO_MODE = os.getenv("ENABLE_LIVE", "0") != "1"
+LIVE_MODE_ENABLED = not DEMO_MODE
+
+# Rate limiting for live mode
+LIVE_RUN_LIMIT_PER_SESSION = 3
+LIVE_DAILY_CAP = int(os.getenv("LIVE_DAILY_CAP", "10"))
+
+# Paths
+DEMO_RESULTS_DIR = Path("results/final")
+LIVE_RESULTS_DIR = Path("results")
+
+
+# =============================================================================
+# STARTUP SELF-CHECK
+# =============================================================================
+def startup_self_check():
+    """Print startup info to log (no secrets)."""
+    print("=" * 60)
+    print("CYBERIMMUNE STARTUP")
+    print("=" * 60)
+    print(f"Mode: {'LIVE (ENABLE_LIVE=1)' if LIVE_MODE_ENABLED else 'DEMO (cached results)'}")
+    print(f"Demo results dir: {DEMO_RESULTS_DIR.exists()} {DEMO_RESULTS_DIR}")
+    print(f"Live results dir: {LIVE_RESULTS_DIR.exists()} {LIVE_RESULTS_DIR}")
+    if DEMO_MODE:
+        manifest_path = DEMO_RESULTS_DIR / "manifest.json"
+        if manifest_path.exists():
+            with open(manifest_path) as f:
+                manifest = json.load(f)
+            print(f"Manifest: {manifest}")
+    print("=" * 60)
+
+
+# Run self-check on import
+startup_self_check()
+
+
+# =============================================================================
+# PAGE CONFIG
+# =============================================================================
 st.set_page_config(
     page_title="CyberImmune - AI Security Investigator",
     page_icon="🛡️",
@@ -50,9 +97,26 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# =============================================================================
+# DATA LOADING (DEMO MODE by default)
+# =============================================================================
+
+@st.cache_data
+def load_demo_scenarios():
+    """Load demo scenarios from results/final/scenarios/ (no ground truth)."""
+    scenarios_dir = DEMO_RESULTS_DIR / "scenarios"
+    scenarios = {}
+    if scenarios_dir.exists():
+        for f in scenarios_dir.glob("*.json"):
+            with open(f) as fh:
+                s = json.load(fh)
+                scenarios[s["scenario_id"]] = s
+    return scenarios
+
+
 @st.cache_data
 def load_all_scenarios():
-    """Load all scenarios from data/scenarios and data/scenarios_handwritten."""
+    """Load all scenarios from data/scenarios (with ground truth for evaluation)."""
     scenarios = load_scenarios("dev") + load_scenarios("test")
     handwritten_dir = Path("data/scenarios_handwritten")
     if handwritten_dir.exists():
@@ -64,8 +128,9 @@ def load_all_scenarios():
 
 @st.cache_data
 def load_evaluation_report(split: str = "dev"):
-    """Load evaluation report from results/."""
-    report_path = Path(f"results/report_{split}.json")
+    """Load evaluation report from results/final/ (demo) or results/ (live)."""
+    base_dir = DEMO_RESULTS_DIR if DEMO_MODE else LIVE_RESULTS_DIR
+    report_path = base_dir / f"report_{split}.json"
     if report_path.exists():
         with open(report_path) as f:
             return json.load(f)
@@ -74,16 +139,18 @@ def load_evaluation_report(split: str = "dev"):
 
 @st.cache_data
 def load_investigation_result(scenario_id: str):
-    """Load investigation result from results/."""
-    result_path = Path(f"results/{scenario_id}.json")
+    """Load investigation result from results/final/ (demo) or results/ (live)."""
+    base_dir = DEMO_RESULTS_DIR if DEMO_MODE else LIVE_RESULTS_DIR
+    result_path = base_dir / f"{scenario_id}.json"
     if result_path.exists():
         with open(result_path) as f:
             return json.load(f)
-    # Also check demo result
-    demo_path = Path("results/demo.json")
-    if demo_path.exists() and scenario_id == "demo_twin_A":
-        with open(demo_path) as f:
-            return json.load(f)
+    # Fallback to demo.json for demo_twin_A
+    if scenario_id == "demo_twin_A":
+        demo_path = DEMO_RESULTS_DIR / "demo.json"
+        if demo_path.exists():
+            with open(demo_path) as f:
+                return json.load(f)
     return None
 
 
@@ -106,6 +173,10 @@ def get_event_color(event_type: str, is_flagged: bool) -> str:
     }
     return colors.get(event_type, "#888888")
 
+
+# =============================================================================
+# SCREEN 1: TIMELINE
+# =============================================================================
 
 def render_timeline_screen(scenario: Dict, session):
     """Screen 1: Timeline of events with baseline flags."""
@@ -226,6 +297,10 @@ Details: {html.escape(event['details'])}
 - **R4 failure_burst**: ≥ 3 failed logins in 10 minutes
             """)
 
+
+# =============================================================================
+# SCREEN 2: INVESTIGATION
+# =============================================================================
 
 def render_investigation_screen(scenario: Dict, session):
     """Screen 2: Investigation with verified claims."""
@@ -397,6 +472,10 @@ def render_investigation_screen(scenario: Dict, session):
                         st.markdown(f"**Model Response:** {html.escape(preview)}...")
 
 
+# =============================================================================
+# SCREEN 3: EVALUATION LAB
+# =============================================================================
+
 def render_evaluation_lab(scenarios: Dict, report: Optional[Dict]):
     """Screen 3: Evaluation Lab - S1/S2/S3 comparison."""
     st.header("🧪 Evaluation Lab")
@@ -414,9 +493,10 @@ def render_evaluation_lab(scenarios: Dict, report: Optional[Dict]):
         st.markdown(f"### {selected_scenario_id} ({scenario['category']})")
         st.markdown(f"**Question:** {scenario['question']}")
 
-        # Ground truth
-        gt = scenario["ground_truth"]
-        st.markdown(f"**Ground Truth:** `{gt['expected_label']}` — {gt.get('notes', '')}")
+        # Ground truth (only shown in demo mode if available)
+        gt = scenario.get("ground_truth", {})
+        if gt:
+            st.markdown(f"**Ground Truth:** `{gt.get('expected_label', 'N/A')}` — {gt.get('notes', '')}")
 
         # System results
         col1, col2, col3 = st.columns(3)
@@ -497,15 +577,42 @@ def render_evaluation_lab(scenarios: Dict, report: Optional[Dict]):
         st.markdown(limits_text[:3000] + "..." if len(limits_text) > 3000 else limits_text)
 
 
+# =============================================================================
+# LIVE MODE HELPERS
+# =============================================================================
+
+def run_live_investigation(scenario: Dict, session, question: str):
+    """Run a live investigation (requires ENABLE_LIVE=1)."""
+    from src.investigator import run_investigation
+    from src.llm_client import LLMClient
+
+    llm = LLMClient()
+    result = run_investigation(session, question, llm=llm, mode="native")
+    return result
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
 def main():
     # Sidebar
     st.sidebar.title("🛡️ CyberImmune")
     st.sidebar.caption("AI Security Investigator with Deterministic Verification")
 
-    # Load data
-    scenarios = load_all_scenarios()
-    report_dev = load_evaluation_report("dev")
-    report_test = load_evaluation_report("test")
+    # Mode indicator
+    if DEMO_MODE:
+        st.sidebar.success("🟢 DEMO MODE (cached results)")
+    else:
+        st.sidebar.warning("🟡 LIVE MODE (ENABLE_LIVE=1)")
+
+    # Load data based on mode
+    if DEMO_MODE:
+        scenarios = load_demo_scenarios()
+        report_dev = load_evaluation_report("dev")
+    else:
+        scenarios = load_all_scenarios()
+        report_dev = load_evaluation_report("dev")
 
     # Scenario selector
     scenario_ids = sorted(scenarios.keys())
@@ -519,6 +626,29 @@ def main():
         format_func=lambda x: f"{x} ({scenarios[x]['category']})"
     )
     scenario = scenarios[selected_scenario_id]
+
+    # Live mode controls (only shown when ENABLE_LIVE=1)
+    if LIVE_MODE_ENABLED:
+        st.sidebar.markdown("---")
+        st.sidebar.subheader("🔴 Live Mode Controls")
+
+        # Session run counter
+        if "live_runs" not in st.session_state:
+            st.session_state.live_runs = 0
+
+        runs_left = LIVE_RUN_LIMIT_PER_SESSION - st.session_state.live_runs
+        st.sidebar.caption(f"Runs left this session: {max(0, runs_left)}")
+
+        if st.sidebar.button("🚀 Run Live Investigation", disabled=runs_left <= 0):
+            if runs_left > 0:
+                with st.spinner("Running live investigation..."):
+                    session = build_session_for_scenario(scenario)
+                    result = run_live_investigation(scenario, session, scenario["question"])
+                    st.session_state.live_runs += 1
+                    st.success(f"Live run completed! Status: {result.get('status', 'unknown')}")
+                    st.rerun()
+            else:
+                st.sidebar.error("Session run limit reached!")
 
     # Screen selector
     screen = st.sidebar.radio(
@@ -541,7 +671,7 @@ def main():
     # Footer
     st.sidebar.markdown("---")
     st.sidebar.caption("CyberImmune — Nebius x NVIDIA Hackathon 2026")
-    st.sidebar.caption("Deterministic verification • No live LLM calls in UI")
+    st.sidebar.caption("Deterministic verification • No live LLM calls in demo mode")
 
 
 if __name__ == "__main__":

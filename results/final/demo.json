@@ -1,0 +1,190 @@
+{
+  "investigation": null,
+  "status": "limit_reached",
+  "audit_steps": [
+    {
+      "step": "model_tool_call",
+      "tool": "query_events",
+      "args": {
+        "user_id": "user_01",
+        "end": "2024-01-22T04:00:00Z",
+        "start": "2024-01-22T02:00:00Z",
+        "limit": 50
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "query_events",
+      "ok": true,
+      "row_count": 2,
+      "error": null
+    },
+    {
+      "step": "model_tool_call",
+      "tool": "get_baseline",
+      "args": {
+        "user_id": "user_01"
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "get_baseline",
+      "ok": true,
+      "row_count": 1,
+      "error": null
+    },
+    {
+      "step": "model_tool_call",
+      "tool": "get_context",
+      "args": {
+        "user_id": "user_01",
+        "start": "2024-01-20T00:00:00Z",
+        "end": "2024-01-23T00:00:00Z",
+        "limit": 20
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "get_context",
+      "ok": true,
+      "row_count": 2,
+      "error": null
+    },
+    {
+      "step": "model_tool_call",
+      "tool": "query_events",
+      "args": {
+        "user_id": "user_01",
+        "limit": 50,
+        "start": "2024-01-20T00:00:00Z",
+        "end": "2024-01-23T00:00:00Z"
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "query_events",
+      "ok": true,
+      "row_count": 27,
+      "error": null
+    },
+    {
+      "step": "model_tool_call",
+      "tool": "query_events",
+      "args": {
+        "resource": "k8s_cluster",
+        "user_id": "user_01",
+        "event_type": "resource_access",
+        "limit": 50
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "query_events",
+      "ok": false,
+      "row_count": 0,
+      "error": "Unknown argument keys: ['resource']"
+    },
+    {
+      "step": "model_tool_call",
+      "tool": "query_events",
+      "args": {
+        "event_type": "resource_access",
+        "limit": 50,
+        "user_id": "user_01"
+      }
+    },
+    {
+      "step": "tool_result",
+      "tool": "query_events",
+      "ok": true,
+      "row_count": 50,
+      "error": null
+    }
+  ],
+  "rounds_used": 6,
+  "retrieved_event_ids": [
+    "EVT-000136",
+    "EVT-000219",
+    "EVT-000011",
+    "EVT-000217",
+    "EVT-000068",
+    "EVT-000225",
+    "EVT-000102",
+    "EVT-000108",
+    "EVT-000051",
+    "EVT-000091",
+    "EVT-000082",
+    "EVT-000221",
+    "EVT-000079",
+    "EVT-000020",
+    "EVT-000031",
+    "EVT-000088",
+    "EVT-000206",
+    "EVT-000024",
+    "EVT-000213",
+    "EVT-000224",
+    "EVT-000135",
+    "EVT-000085",
+    "EVT-000037",
+    "EVT-990002",
+    "EVT-000227",
+    "EVT-000076",
+    "EVT-000126",
+    "EVT-000220",
+    "EVT-000207",
+    "EVT-000216",
+    "EVT-000205",
+    "EVT-000209",
+    "EVT-000226",
+    "EVT-000130",
+    "EVT-000223",
+    "EVT-000218",
+    "EVT-000211",
+    "EVT-000008",
+    "EVT-000215",
+    "EVT-000140",
+    "EVT-000118",
+    "EVT-000210",
+    "EVT-000021",
+    "EVT-000089",
+    "EVT-000114",
+    "EVT-000139",
+    "EVT-990001",
+    "EVT-000029",
+    "EVT-000123",
+    "EVT-000138",
+    "EVT-000121",
+    "EVT-000203",
+    "EVT-000222",
+    "EVT-000032",
+    "EVT-000104",
+    "EVT-000116",
+    "EVT-000042",
+    "EVT-000152",
+    "EVT-000131",
+    "EVT-000096",
+    "EVT-000147",
+    "EVT-000109",
+    "EVT-000053",
+    "EVT-000142",
+    "EVT-000204",
+    "EVT-000066",
+    "EVT-000001",
+    "EVT-000065",
+    "EVT-000208",
+    "EVT-000006",
+    "EVT-000018",
+    "EVT-000095",
+    "EVT-000036",
+    "EVT-000084",
+    "EVT-000214",
+    "EVT-000212",
+    "EVT-000049"
+  ],
+  "retrieved_record_ids": [
+    "CTX-99001",
+    "CTX-99002"
+  ],
+  "model_name": "nvidia/nemotron-3-ultra-550b-a55b",
+  "system_prompt_version": "v1"
+}

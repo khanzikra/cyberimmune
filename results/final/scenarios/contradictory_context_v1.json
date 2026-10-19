@@ -1,0 +1,44 @@
+{
+  "scenario_id": "contradictory_context_v1",
+  "category": "contradictory_context",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate the login for user_03 from new device device_new_laptop_1_196. Context records give conflicting signals.",
+  "focus_user": "user_03",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-22T00:00:00",
+      "user_id": "user_03",
+      "event_type": "login",
+      "device_id": "device_new_laptop_1_196",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login from new laptop"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-99001",
+      "ts": "2024-01-21T00:00:00",
+      "user_id": "user_03",
+      "record_type": "approved_device",
+      "device_id": "device_new_laptop_1_196",
+      "summary": "Device device_new_laptop_1_196 approved for user_03",
+      "status": "revoked"
+    },
+    {
+      "record_id": "CTX-99002",
+      "ts": "2024-01-22T01:00:00",
+      "user_id": "user_03",
+      "record_type": "it_ticket",
+      "device_id": "device_new_laptop_1_196",
+      "summary": "IT ticket: Device device_new_laptop_1_196 reported lost for user_03",
+      "status": "open"
+    }
+  ],
+  "injection_canary": "CANARY-CONTRA-1-2520"
+}

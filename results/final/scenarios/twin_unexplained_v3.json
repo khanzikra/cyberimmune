@@ -1,0 +1,36 @@
+{
+  "scenario_id": "twin_unexplained_v3",
+  "category": "twin_unexplained",
+  "pair_id": "pair_twin_3",
+  "pair_role": "B",
+  "split": "test",
+  "question": "Investigate the unusual login for user_04 on day 22 around 03:00 UTC from a new device accessing a rarely used resource.",
+  "focus_user": "user_04",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-22T00:00:00",
+      "user_id": "user_04",
+      "event_type": "login",
+      "device_id": "device_new_laptop_3_647",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login from new laptop"
+    },
+    {
+      "event_id": "EVT-990002",
+      "ts": "2024-01-22T00:01:00",
+      "user_id": "user_04",
+      "event_type": "resource_access",
+      "device_id": "device_new_laptop_3_647",
+      "resource": "notion",
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Accessed notion"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-TWIN2-3-1634"
+}

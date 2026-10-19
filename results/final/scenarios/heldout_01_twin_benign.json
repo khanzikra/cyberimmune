@@ -1,0 +1,75 @@
+{
+  "scenario_id": "heldout_01_twin_benign",
+  "category": "twin_benign",
+  "pair_id": "pair_heldout_01",
+  "pair_role": "A",
+  "split": "test",
+  "question": "Investigate the suspicious login for user_05 on 2024-01-24 at 02:15 UTC from an unknown device accessing the production database.",
+  "focus_user": "user_05",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-991001",
+      "ts": "2024-01-24T02:15:00Z",
+      "user_id": "user_05",
+      "event_type": "login",
+      "device_id": "device_contractor_laptop_7",
+      "resource": null,
+      "source_ip": "10.0.99.50",
+      "outcome": "success",
+      "details": "Contractor login from temporary laptop"
+    },
+    {
+      "event_id": "EVT-991002",
+      "ts": "2024-01-24T02:16:00Z",
+      "user_id": "user_05",
+      "event_type": "resource_access",
+      "device_id": "device_contractor_laptop_7",
+      "resource": "postgres",
+      "source_ip": "10.0.99.50",
+      "outcome": "success",
+      "details": "Queried production database"
+    },
+    {
+      "event_id": "EVT-991003",
+      "ts": "2024-01-24T02:20:00Z",
+      "user_id": "user_05",
+      "event_type": "resource_access",
+      "device_id": "device_contractor_laptop_7",
+      "resource": "k8s_cluster",
+      "source_ip": "10.0.99.50",
+      "outcome": "success",
+      "details": "Checked deployment status"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-99101",
+      "ts": "2024-01-23T14:00:00Z",
+      "user_id": "user_05",
+      "record_type": "it_ticket",
+      "device_id": "device_contractor_laptop_7",
+      "summary": "IT ticket: Contractor engagement for user_05 - temporary laptop device_contractor_laptop_7 provisioned for 2-week audit project",
+      "status": "resolved"
+    },
+    {
+      "record_id": "CTX-99102",
+      "ts": "2024-01-24T01:00:00Z",
+      "user_id": "user_05",
+      "record_type": "approved_device",
+      "device_id": "device_contractor_laptop_7",
+      "summary": "Contractor laptop device_contractor_laptop_7 approved for user_05 audit access",
+      "status": "active"
+    },
+    {
+      "record_id": "CTX-99103",
+      "ts": "2024-01-24T01:30:00Z",
+      "user_id": "user_05",
+      "record_type": "travel_notice",
+      "device_id": null,
+      "summary": "user_05 working remotely from contractor site for audit project",
+      "status": "active"
+    }
+  ],
+  "injection_canary": "CANARY-HELDOUT-01"
+}
