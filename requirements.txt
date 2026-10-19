@@ -3,3 +3,5 @@ python-dotenv
 pydantic
 pandas
 pytest
+streamlit
+plotly
