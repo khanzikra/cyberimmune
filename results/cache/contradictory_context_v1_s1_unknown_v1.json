@@ -1,0 +1,21 @@
+{
+  "system": "s1",
+  "investigation": {
+    "question": "Investigate the login for user_03 from new device device_new_laptop_1_196. Context records give conflicting signals.",
+    "claims": [],
+    "hypotheses": [],
+    "missing_evidence": [],
+    "next_steps": [
+      "Review rule triggers manually"
+    ],
+    "conclusion": {
+      "label": "unexplained",
+      "rationale": "Rules triggered 16 indicator(s): ['R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R2', 'R3', 'R3', 'R3', 'R3', 'R3', 'R3', 'R3']"
+    }
+  },
+  "status": "success",
+  "rounds_used": 0,
+  "retrieved_event_ids": [],
+  "retrieved_record_ids": [],
+  "scenario_id": "contradictory_context_v1"
+}
