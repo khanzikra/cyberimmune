@@ -205,7 +205,8 @@ def render_timeline_screen(scenario: Dict, session):
 
     # Create Plotly timeline
     df = pd.DataFrame(events)
-    df["ts"] = pd.to_datetime(df["ts"])
+    # Handle mixed timestamp formats (with/without Z suffix)
+    df["ts"] = pd.to_datetime(df["ts"], utc=True, format="mixed")
     df["is_flagged"] = df["event_id"].isin(flagged_event_ids)
     df["color"] = df.apply(lambda r: get_event_color(r["event_type"], r["is_flagged"]), axis=1)
     df["hover_text"] = df.apply(
