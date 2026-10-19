@@ -154,9 +154,8 @@ def load_investigation_result(scenario_id: str):
     return None
 
 
-@st.cache_data
 def build_session_for_scenario(scenario: Dict):
-    """Build a ToolSession for a scenario (cached)."""
+    """Build a ToolSession for a scenario (not cached - returns DB connection)."""
     session = build_session(scenario)
     return session
 
