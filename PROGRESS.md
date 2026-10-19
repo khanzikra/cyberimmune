@@ -1,0 +1,15 @@
+# PROGRESS (the assistant reads this first; the user says when a phase is done)
+
+- [ ] Phase 0  Setup + Nebius API test (prompts/00_setup_and_api_test.md)
+- [ ] Phase 1  Synthetic data + baseline rules (prompts/01_data_and_baseline.md)
+- [ ] Phase 2  Read-only tools (prompts/02_readonly_tools.md)
+- [ ] Phase 3  Investigation loop (prompts/03_investigation_loop.md)
+- [ ] Phase 4  Verifier (prompts/04_evidence_verifier.md)
+- [ ] Phase 5  Scenarios + evaluation (prompts/05_scenarios_and_evaluation.md)
+- [ ] Phase 6  Streamlit UI (prompts/06_streamlit_ui.md)
+- [ ] Phase 7  Hosted demo (prompts/07_deploy_and_demo_mode.md)
+- [ ] Phase 8  README and docs (prompts/08_docs_and_readme.md)
+- [ ] Phase 9  Video script (prompts/09_demo_video_script.md)
+- [ ] Phase 10 Final checks (prompts/10_final_checks.md)
+
+## Notes (one line per finished phase: what was verified, known problems)
