@@ -5,6 +5,9 @@
 @use "vertical-nav";
 @use "default-layout-w-vertical-nav";
 
+// Custom animations & micro-interactions
+// @use "../../../assets/styles/animations.scss" as animations;  // TODO: Fix module variables
+
 // Utilities
 @use "utilities";
 

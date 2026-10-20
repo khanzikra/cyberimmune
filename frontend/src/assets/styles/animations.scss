@@ -1,0 +1,745 @@
+/**
+ * CyberImmune - Custom Animations & Micro-interactions
+ * Humanized, polished feel - not AI-generated perfection
+ * Subtle, purposeful, delightful
+ */
+
+// ============================================
+// EASING CURVES - Natural, human timing
+// ============================================
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+$ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+$ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+$ease-spring: cubic-bezier(0.34, 1.61, 0.7, 1);
+$ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-bounce-subtle: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ============================================
+// DURATION TOKENS
+// ============================================
+$duration-instant: 50ms;
+$duration-fast: 120ms;
+$duration-normal: 200ms;
+$duration-slow: 320ms;
+$duration-slower: 480ms;
+
+// ============================================
+// ENTRANCE ANIMATIONS
+// ============================================
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-in-bounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes expand-width {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes expand-height {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+// ============================================
+// MICRO-INTERACTIONS
+// ============================================
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.85;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+// ============================================
+// UTILITY CLASSES
+// ============================================
+
+// Entrance
+.animate-fade-in {
+  animation: fade-in $duration-normal $ease-out-cubic forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up $duration-normal $ease-out-cubic forwards;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down $duration-normal $ease-out-cubic forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right $duration-normal $ease-out-cubic forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left $duration-normal $ease-out-cubic forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in $duration-normal $ease-out-back forwards;
+}
+
+.animate-scale-in-bounce {
+  animation: scale-in-bounce $duration-slower $ease-bounce-subtle forwards;
+}
+
+// Stagger delays for lists
+.stagger-1 { animation-delay: 40ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 120ms; }
+.stagger-4 { animation-delay: 160ms; }
+.stagger-5 { animation-delay: 200ms; }
+.stagger-6 { animation-delay: 240ms; }
+
+// Micro-interactions
+.hover-lift {
+  transition: transform $duration-fast $ease-out-cubic, 
+              box-shadow $duration-fast $ease-out-cubic;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+}
+
+.hover-scale {
+  transition: transform $duration-fast $ease-out-cubic;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.015);
+}
+
+.press-down:active {
+  transform: scale(0.98);
+  transition: transform 40ms $ease-out-cubic;
+}
+
+// Focus visible - accessible but beautiful
+.focus-ring:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--v-primary-base);
+  ring-offset: 2px;
+  ring-offset-color: var(--v-background-base);
+  transition: box-shadow $duration-fast $ease-out-cubic;
+}
+
+// Loading states
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--v-surface-variant) 25%,
+    var(--v-surface) 50%,
+    var(--v-surface-variant) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s $ease-gentle infinite;
+  border-radius: 4px;
+}
+
+.skeleton-text {
+  @extend .skeleton;
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.skeleton-avatar {
+  @extend .skeleton;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.skeleton-card {
+  @extend .skeleton;
+  height: 200px;
+  border-radius: 12px;
+}
+
+// Card entrance stagger
+.card-entrance {
+  opacity: 0;
+  animation: fade-in-up $duration-normal $ease-out-cubic forwards;
+}
+
+.card-entrance:nth-child(1) { animation-delay: 60ms; }
+.card-entrance:nth-child(2) { animation-delay: 100ms; }
+.card-entrance:nth-child(3) { animation-delay: 140ms; }
+.card-entrance:nth-child(4) { animation-delay: 180ms; }
+.card-entrance:nth-child(5) { animation-delay: 220ms; }
+.card-entrance:nth-child(5) { animation-delay: 260ms; }
+
+// Status indicators with personality
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.status-dot--verified {
+  color: #10B981;
+}
+
+.status-dot--failed {
+  color: #EF4444;
+}
+
+.status-dot--pending {
+  color: #F59E0B;
+  animation: pulse-subtle 1.5s ease-in-out infinite;
+}
+
+// Badge animations
+.badge-pop {
+  animation: scale-in-bounce $duration-normal $ease-out-back forwards;
+}
+
+.badge-new {
+  position: relative;
+}
+
+.badge-new::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  background: #EF4444;
+  border-radius: 50%;
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+// Table row entrance
+.table-row {
+  opacity: 0;
+  animation: fade-in-up $duration-normal $ease-out-cubic forwards;
+}
+
+.table-row:nth-child(odd) { animation-delay: 40ms; }
+.table-row:nth-child(even) { animation-delay: 80ms; }
+
+// Expansion panel smooth
+.v-expansion-panel-text__wrapper {
+  animation: expand-height $duration-normal $ease-out-cubic;
+}
+
+// Tab transition
+.tab-indicator {
+  transition: transform $duration-normal $ease-out-cubic,
+              width $duration-normal $ease-out-cubic;
+}
+
+// Toast/notification entrance
+.toast-enter {
+  animation: slide-in-right $duration-normal $ease-out-cubic forwards;
+}
+
+.toast-leave {
+  animation: slide-in-left $duration-fast $ease-in-cubic forwards;
+}
+
+// Drawer/sheet entrance
+.drawer-enter {
+  animation: slide-in-right $duration-normal $ease-out-cubic;
+}
+
+.drawer-leave {
+  animation: slide-in-left $duration-normal $ease-in-cubic;
+}
+
+// Dialog/modal entrance
+.modal-enter {
+  animation: scale-in $duration-fast $ease-out-back;
+}
+
+.modal-overlay-enter {
+  animation: fade-in $duration-fast $ease-out-cubic;
+}
+
+// Tooltip
+.tooltip-enter {
+  animation: scale-in $duration-fast $ease-out-back;
+}
+
+// Menu entrance
+.menu-enter {
+  animation: scale-in $duration-fast $ease-out-cubic;
+  transform-origin: top right;
+}
+
+// Tab panel switch
+.tab-panel {
+  animation: fade-in $duration-fast $ease-out-cubic;
+}
+
+// Progress bar indeterminate
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.progress-indeterminate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  animation: progress-indeterminate 1.5s $ease-gentle infinite;
+}
+
+// Chart entrance
+.chart-bar {
+  animation: expand-height $duration-slow $ease-out-cubic forwards;
+  transform-origin: bottom;
+}
+
+.chart-bar:nth-child(1) { animation-delay: 80ms; }
+.chart-bar:nth-child(2) { animation-delay: 120ms; }
+.chart-bar:nth-child(3) { animation-delay: 160ms; }
+.chart-bar:nth-child(4) { animation-delay: 200ms; }
+.chart-bar:nth-child(5) { animation-delay: 240ms; }
+.chart-bar:nth-child(6) { animation-delay: 280ms; }
+
+// Number counter animation
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.counter-up {
+  animation: count-up $duration-normal $ease-out-cubic forwards;
+}
+
+// Page transition
+.page-enter {
+  animation: fade-in $duration-normal $ease-out-cubic;
+}
+
+.page-leave {
+  animation: fade-in $duration-fast $ease-in-cubic reverse;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* ============================================
+   COMPONENT-SPECIFIC ANIMATIONS
+   ============================================ */
+
+// Timeline event dots
+.timeline-dot {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.timeline-dot--active {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+// Investigation claim cards
+.claim-card {
+  opacity: 0;
+  animation: fade-in-up $duration-normal $ease-out-cubic forwards;
+}
+
+.claim-card:nth-child(1) { animation-delay: 80ms; }
+.claim-card:nth-child(2) { animation-delay: 120ms; }
+.claim-card:nth-child(3) { animation-delay: 160ms; }
+.claim-card:nth-child(4) { animation-delay: 200ms; }
+.claim-card:nth-child(5) { animation-delay: 240ms; }
+
+// Verification status badges
+.verification-badge {
+  animation: scale-in-bounce $duration-fast $ease-out-back forwards;
+}
+
+.verification-badge--verified {
+  animation-delay: 100ms;
+}
+
+.verification-badge--failed {
+  animation-delay: 150ms;
+}
+
+.verification-badge--interpretation {
+  animation-delay: 200ms;
+}
+
+// Timeline chart dots
+.chart-dot {
+  transition: transform $duration-fast $ease-out-cubic,
+              opacity $duration-fast $ease-out-cubic;
+}
+
+.chart-dot:hover {
+  transform: scale(1.5);
+  z-index: 10;
+}
+
+// KPI counter animation
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kpi-value {
+  animation: count-up $duration-normal $ease-out-cubic forwards;
+}
+
+.kpi-value:nth-child(1) { animation-delay: 100ms; }
+.kpi-value:nth-child(2) { animation-delay: 140ms; }
+.kpi-value:nth-child(3) { animation-delay: 180ms; }
+.kpi-value:nth-child(3) { animation-delay: 220ms; }
+
+// Notification toast stack
+.toast-container {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+}
+
+.toast-enter {
+  animation: slide-in-right $duration-normal $ease-out-cubic forwards;
+}
+
+.toast-leave {
+  animation: slide-in-left $duration-fast $ease-in-cubic forwards;
+}
+
+/* ============================================
+   PAGE TRANSITIONS (for router-view)
+   ============================================ */
+
+.page-transition {
+  position: relative;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all $duration-normal $ease-gentle;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.page-enter-to,
+.page-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================
+   FOCUS & ACCESSIBILITY
+   ============================================ */
+
+// Beautiful focus styles
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-primary-base) 40%, transparent);
+  border-radius: 4px;
+  transition: box-shadow $duration-fast $ease-out-cubic;
+}
+
+// Skip link for accessibility
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: var(--v-primary-base);
+  color: var(--v-on-primary-base);
+  border-radius: 8px;
+  z-index: 10000;
+  font-weight: 500;
+  transition: top $duration-fast $ease-out-cubic;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--v-surface-variant);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--v-border-color);
+  border-radius: 4px;
+  border: 2px solid var(--v-surface-variant);
+  transition: background $duration-fast $ease-out-cubic;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--v-text-disabled);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-border-color) var(--v-surface-variant);
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+
+::selection {
+  background: color-mix(in srgb, var(--v-primary-base) 25%, transparent);
+  color: var(--v-on-primary-base);
+}
+
+/* ============================================
+   DISABLED STATES
+   ============================================ */
+
+:disabled,
+[disabled],
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================
+   RESPECT USER PREFERENCES
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --v-border-opacity: 0.3;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .v-application--wrap {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .v-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}
