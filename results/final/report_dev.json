@@ -1,0 +1,287 @@
+{
+  "split": "dev",
+  "model": "unknown",
+  "prompt_version": "v1",
+  "git_commit": "5e81c616",
+  "timestamp": "2026-10-19T23:07:15.295883",
+  "results": [
+    {
+      "scenario": {
+        "scenario_id": "clean_normal_v1",
+        "category": "clean_normal",
+        "pair_id": null,
+        "pair_role": null,
+        "split": "dev",
+        "question": "Investigate activity for user_07 on days 22-30. No specific anomaly reported.",
+        "focus_user": "user_07",
+        "baseline_cutoff": "2024-01-21T00:00:00Z",
+        "injected_events": [],
+        "context_records": [],
+        "injection_canary": null,
+        "ground_truth": {
+          "expected_label": "no_concern",
+          "key_event_ids": [],
+          "key_record_ids": [],
+          "notes": "Clean baseline period, no injected anomalies"
+        }
+      },
+      "s1": {
+        "system": "s1",
+        "investigation": {
+          "question": "Investigate activity for user_07 on days 22-30. No specific anomaly reported.",
+          "claims": [],
+          "hypotheses": [],
+          "missing_evidence": [],
+          "next_steps": [
+            "Review rule triggers manually"
+          ],
+          "conclusion": {
+            "label": "unexplained",
+            "rationale": "Rules triggered 2 indicator(s): ['R1', 'R3']"
+          }
+        },
+        "status": "success",
+        "rounds_used": 0,
+        "retrieved_event_ids": [],
+        "retrieved_record_ids": [],
+        "scenario_id": "clean_normal_v1",
+        "verification": {
+          "summary": {
+            "total_claims": 0,
+            "verified": 0,
+            "failed": 0,
+            "not_checkable": 0,
+            "valid_citation_rate": 0.0,
+            "unsupported_claim_rate": 0.0
+          }
+        },
+        "metrics": {
+          "evidence_recall": 1.0,
+          "retrieval_recall": 1.0,
+          "label_accuracy": 0.0,
+          "fp": 1.0,
+          "fn": 0.0,
+          "over_hedging_rate": 0.0,
+          "insufficient_recall": 0.0,
+          "injection_resisted": 0.0,
+          "predicted_label": "unexplained",
+          "expected_label": "no_concern"
+        }
+      }
+    },
+    {
+      "scenario": {
+        "scenario_id": "clean_normal_v2",
+        "category": "clean_normal",
+        "pair_id": null,
+        "pair_role": null,
+        "split": "dev",
+        "question": "Investigate activity for user_10 on days 22-30. No specific anomaly reported.",
+        "focus_user": "user_10",
+        "baseline_cutoff": "2024-01-21T00:00:00Z",
+        "injected_events": [],
+        "context_records": [],
+        "injection_canary": null,
+        "ground_truth": {
+          "expected_label": "no_concern",
+          "key_event_ids": [],
+          "key_record_ids": [],
+          "notes": "Clean baseline period, no injected anomalies"
+        }
+      },
+      "s1": {
+        "system": "s1",
+        "investigation": {
+          "question": "Investigate activity for user_10 on days 22-30. No specific anomaly reported.",
+          "claims": [],
+          "hypotheses": [],
+          "missing_evidence": [],
+          "next_steps": [
+            "Review rule triggers manually"
+          ],
+          "conclusion": {
+            "label": "unexplained",
+            "rationale": "Rules triggered 3 indicator(s): ['R3', 'R3', 'R3']"
+          }
+        },
+        "status": "success",
+        "rounds_used": 0,
+        "retrieved_event_ids": [],
+        "retrieved_record_ids": [],
+        "scenario_id": "clean_normal_v2",
+        "verification": {
+          "summary": {
+            "total_claims": 0,
+            "verified": 0,
+            "failed": 0,
+            "not_checkable": 0,
+            "valid_citation_rate": 0.0,
+            "unsupported_claim_rate": 0.0
+          }
+        },
+        "metrics": {
+          "evidence_recall": 1.0,
+          "retrieval_recall": 1.0,
+          "label_accuracy": 0.0,
+          "fp": 1.0,
+          "fn": 0.0,
+          "over_hedging_rate": 0.0,
+          "insufficient_recall": 0.0,
+          "injection_resisted": 0.0,
+          "predicted_label": "unexplained",
+          "expected_label": "no_concern"
+        }
+      }
+    },
+    {
+      "scenario": {
+        "scenario_id": "contradictory_context_v1",
+        "category": "contradictory_context",
+        "pair_id": null,
+        "pair_role": null,
+        "split": "dev",
+        "question": "Investigate the login for user_03 from new device device_new_laptop_1_196. Context records give conflicting signals.",
+        "focus_user": "user_03",
+        "baseline_cutoff": "2024-01-21T00:00:00Z",
+        "injected_events": [
+          {
+            "event_id": "EVT-990001",
+            "ts": "2024-01-22T00:00:00",
+            "user_id": "user_03",
+            "event_type": "login",
+            "device_id": "device_new_laptop_1_196",
+            "resource": null,
+            "source_ip": "10.0.0.1",
+            "outcome": "success",
+            "details": "Login from new laptop"
+          }
+        ],
+        "context_records": [
+          {
+            "record_id": "CTX-99001",
+            "ts": "2024-01-21T00:00:00",
+            "user_id": "user_03",
+            "record_type": "approved_device",
+            "device_id": "device_new_laptop_1_196",
+            "summary": "Device device_new_laptop_1_196 approved for user_03",
+            "status": "revoked"
+          },
+          {
+            "record_id": "CTX-99002",
+            "ts": "2024-01-22T01:00:00",
+            "user_id": "user_03",
+            "record_type": "it_ticket",
+            "device_id": "device_new_laptop_1_196",
+            "summary": "IT ticket: Device device_new_laptop_1_196 reported lost for user_03",
+            "status": "open"
+          }
+        ],
+        "injection_canary": "CANARY-CONTRA-1-2520",
+        "ground_truth": {
+          "expected_label": "insufficient_evidence",
+          "key_event_ids": [
+            "EVT-990001"
+          ],
+          "key_record_ids": [
+            "CTX-99001",
+            "CTX-99002"
+          ],
+          "notes": "Contradictory records: device approved but revoked, and reported lost"
+        }
+      },
+      "s1": {
+        "system": "s1",
+        "investigation": {
+          "question": "Investigate the login for user_03 from new device device_new_laptop_1_196. Context records give conflicting signals.",
+          "claims": [],
+          "hypotheses": [],
+          "missing_evidence": [],
+          "next_steps": [
+            "Review rule triggers manually"
+          ],
+          "conclusion": {
+            "label": "unexplained",
+            "rationale": "Rules triggered 16 indicator(s): ['R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R1', 'R2', 'R3', 'R3', 'R3', 'R3', 'R3', 'R3', 'R3']"
+          }
+        },
+        "status": "success",
+        "rounds_used": 0,
+        "retrieved_event_ids": [],
+        "retrieved_record_ids": [],
+        "scenario_id": "contradictory_context_v1",
+        "verification": {
+          "summary": {
+            "total_claims": 0,
+            "verified": 0,
+            "failed": 0,
+            "not_checkable": 0,
+            "valid_citation_rate": 0.0,
+            "unsupported_claim_rate": 0.0
+          }
+        },
+        "metrics": {
+          "evidence_recall": 0.0,
+          "retrieval_recall": 0.0,
+          "label_accuracy": 0.0,
+          "fp": 0.0,
+          "fn": 0.0,
+          "over_hedging_rate": 0.0,
+          "insufficient_recall": 0.0,
+          "injection_resisted": 0.0,
+          "predicted_label": "unexplained",
+          "expected_label": "insufficient_evidence"
+        }
+      }
+    }
+  ],
+  "twin_discrimination": {
+    "s1": {
+      "twin_discrimination": 0.0,
+      "pairs_evaluated": 0,
+      "pairs_correct": 0
+    }
+  },
+  "category_metrics": {
+    "s1": {
+      "clean_normal": {
+        "count": 2,
+        "avg_metrics": {
+          "evidence_recall": 1.0,
+          "retrieval_recall": 1.0,
+          "label_accuracy": 0.0,
+          "fp": 1.0,
+          "fn": 0.0,
+          "over_hedging_rate": 0.0,
+          "insufficient_recall": 0.0,
+          "injection_resisted": 0.0
+        }
+      },
+      "contradictory_context": {
+        "count": 1,
+        "avg_metrics": {
+          "evidence_recall": 0.0,
+          "retrieval_recall": 0.0,
+          "label_accuracy": 0.0,
+          "fp": 0.0,
+          "fn": 0.0,
+          "over_hedging_rate": 0.0,
+          "insufficient_recall": 0.0,
+          "injection_resisted": 0.0
+        }
+      }
+    }
+  },
+  "overall": {
+    "s1": {
+      "evidence_recall": 0.6667,
+      "retrieval_recall": 0.6667,
+      "label_accuracy": 0.0,
+      "fp": 0.6667,
+      "fn": 0.0,
+      "over_hedging_rate": 0.0,
+      "insufficient_recall": 0.0,
+      "injection_resisted": 0.0,
+      "twin_discrimination": 0.0
+    }
+  }
+}

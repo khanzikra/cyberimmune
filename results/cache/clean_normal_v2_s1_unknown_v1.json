@@ -1,0 +1,21 @@
+{
+  "system": "s1",
+  "investigation": {
+    "question": "Investigate activity for user_10 on days 22-30. No specific anomaly reported.",
+    "claims": [],
+    "hypotheses": [],
+    "missing_evidence": [],
+    "next_steps": [
+      "Review rule triggers manually"
+    ],
+    "conclusion": {
+      "label": "unexplained",
+      "rationale": "Rules triggered 3 indicator(s): ['R3', 'R3', 'R3']"
+    }
+  },
+  "status": "success",
+  "rounds_used": 0,
+  "retrieved_event_ids": [],
+  "retrieved_record_ids": [],
+  "scenario_id": "clean_normal_v2"
+}

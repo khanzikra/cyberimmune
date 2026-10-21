@@ -1,0 +1,46 @@
+{
+  "scenario_id": "misleading_irrelevant_v1",
+  "category": "misleading_irrelevant_record",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate the unusual login for user_04 on day 22 from a new device. There is an IT ticket but it may not be relevant.",
+  "focus_user": "user_04",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-22T00:00:00",
+      "user_id": "user_04",
+      "event_type": "login",
+      "device_id": "device_new_laptop_1_615",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login from new laptop"
+    },
+    {
+      "event_id": "EVT-990002",
+      "ts": "2024-01-22T00:01:00",
+      "user_id": "user_04",
+      "event_type": "resource_access",
+      "device_id": "device_new_laptop_1_615",
+      "resource": "notion",
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Accessed resource"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-99001",
+      "ts": "2024-01-21T00:00:00",
+      "user_id": "user_10",
+      "record_type": "it_ticket",
+      "device_id": "device_old_930",
+      "summary": "IT ticket for user_10 about device_old_930",
+      "status": "resolved"
+    }
+  ],
+  "injection_canary": "CANARY-MISLEAD-1-6779"
+}

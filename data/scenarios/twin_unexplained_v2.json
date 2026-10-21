@@ -1,0 +1,45 @@
+{
+  "scenario_id": "twin_unexplained_v2",
+  "category": "twin_unexplained",
+  "pair_id": "pair_twin_2",
+  "pair_role": "B",
+  "split": "dev",
+  "question": "Investigate the unusual login for user_10 on day 22 around 03:00 UTC from a new device accessing a rarely used resource.",
+  "focus_user": "user_10",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-22T00:00:00",
+      "user_id": "user_10",
+      "event_type": "login",
+      "device_id": "device_new_laptop_2_902",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login from new laptop"
+    },
+    {
+      "event_id": "EVT-990002",
+      "ts": "2024-01-22T00:01:00",
+      "user_id": "user_10",
+      "event_type": "resource_access",
+      "device_id": "device_new_laptop_2_902",
+      "resource": "cloudflare",
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Accessed cloudflare"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-TWIN2-2-6407",
+  "ground_truth": {
+    "expected_label": "unexplained",
+    "key_event_ids": [
+      "EVT-990001",
+      "EVT-990002"
+    ],
+    "key_record_ids": [],
+    "notes": "Same anomaly as twin A but no explaining context record exists"
+  }
+}

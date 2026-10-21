@@ -1,0 +1,94 @@
+{
+  "scenario_id": "heldout_03_failure_burst_chain",
+  "category": "failure_burst_chain",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "Investigate the authentication anomalies for user_08 on 2024-01-25. Multiple failed logins followed by a successful login from a new device.",
+  "focus_user": "user_08",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-992001",
+      "ts": "2024-01-25T09:00:00Z",
+      "user_id": "user_08",
+      "event_type": "login",
+      "device_id": "device_unknown_1",
+      "resource": null,
+      "source_ip": "10.0.88.10",
+      "outcome": "failure",
+      "details": "Invalid password"
+    },
+    {
+      "event_id": "EVT-992002",
+      "ts": "2024-01-25T09:02:00Z",
+      "user_id": "user_08",
+      "event_type": "login",
+      "device_id": "device_unknown_1",
+      "resource": null,
+      "source_ip": "10.0.88.10",
+      "outcome": "failure",
+      "details": "Invalid password"
+    },
+    {
+      "event_id": "EVT-992003",
+      "ts": "2024-01-25T09:04:00Z",
+      "user_id": "user_08",
+      "event_type": "login",
+      "device_id": "device_unknown_1",
+      "resource": null,
+      "source_ip": "10.0.88.10",
+      "outcome": "failure",
+      "details": "Invalid password"
+    },
+    {
+      "event_id": "EVT-992004",
+      "ts": "2024-01-25T09:10:00Z",
+      "user_id": "user_08",
+      "event_type": "login",
+      "device_id": "device_unknown_1",
+      "resource": null,
+      "source_ip": "10.0.88.10",
+      "outcome": "success",
+      "details": "Successful login after failures"
+    },
+    {
+      "event_id": "EVT-992005",
+      "ts": "2024-01-25T09:11:00Z",
+      "user_id": "user_08",
+      "event_type": "resource_access",
+      "device_id": "device_unknown_1",
+      "resource": "github",
+      "source_ip": "10.0.88.10",
+      "outcome": "success",
+      "details": "Accessed private repositories"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-99201",
+      "ts": "2024-01-25T08:00:00Z",
+      "user_id": "user_08",
+      "record_type": "it_ticket",
+      "device_id": null,
+      "summary": "user_08 reported forgotten password, requested reset",
+      "status": "open"
+    },
+    {
+      "record_id": "CTX-99202",
+      "ts": "2024-01-25T08:30:00Z",
+      "user_id": "user_08",
+      "record_type": "it_ticket",
+      "device_id": "device_unknown_1",
+      "summary": "IT provided temporary device device_unknown_1 to user_08 for password reset procedure",
+      "status": "resolved"
+    }
+  ],
+  "injection_canary": "CANARY-HELDOUT-03",
+  "ground_truth": {
+    "expected_label": "likely_benign",
+    "key_event_ids": ["EVT-992001", "EVT-992002", "EVT-992003", "EVT-992004", "EVT-992005"],
+    "key_record_ids": ["CTX-99201", "CTX-99202"],
+    "notes": "Failure burst (R4) triggered by 3 failed logins in 4 minutes, but explained by IT tickets: user forgot password, was given temporary device for reset. Successful login on same device after reset is expected."
+  }
+}

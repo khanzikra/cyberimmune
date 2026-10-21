@@ -1,0 +1,25 @@
+{
+  "scenario_id": "normal_looks_unusual_v3",
+  "category": "normal_looks_unusual",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "Investigate the login for user_10 at an unusual hour. Everything else appears normal.",
+  "focus_user": "user_10",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-23T19:00:00",
+      "user_id": "user_10",
+      "event_type": "login",
+      "device_id": "device_user_10_a",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login at edge of usual hours"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-NORMAL-3-9173"
+}

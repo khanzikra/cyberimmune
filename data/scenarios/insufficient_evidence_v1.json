@@ -1,0 +1,33 @@
+{
+  "scenario_id": "insufficient_evidence_v1",
+  "category": "insufficient_evidence",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate the login for user_11 on day 26. This user has very little baseline history.",
+  "focus_user": "user_11",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-990001",
+      "ts": "2024-01-26T00:00:00",
+      "user_id": "user_11",
+      "event_type": "login",
+      "device_id": "device_user_11_a",
+      "resource": null,
+      "source_ip": "10.0.0.1",
+      "outcome": "success",
+      "details": "Login with insufficient baseline"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-INSUFF-1-9041",
+  "ground_truth": {
+    "expected_label": "insufficient_evidence",
+    "key_event_ids": [
+      "EVT-990001"
+    ],
+    "key_record_ids": [],
+    "notes": "User has < 20 baseline logins (actually 0 in base), baseline_insufficient"
+  }
+}

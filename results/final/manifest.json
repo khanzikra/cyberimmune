@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-10-19",
+  "description": "Cached results for CyberImmune demo mode (synthetic, key-free)",
+  "reports": [
+    "report_dev.json",
+    "report_test.json"
+  ],
+  "investigations": [
+    "demo.json"
+  ],
+  "scenarios_count": 28
+}

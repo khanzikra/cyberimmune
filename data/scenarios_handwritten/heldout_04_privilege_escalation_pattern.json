@@ -1,0 +1,72 @@
+{
+  "scenario_id": "heldout_04_privilege_escalation_pattern",
+  "category": "privilege_escalation_pattern",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "Investigate the privilege escalation pattern for user_03 on 2024-01-26. User accessed admin-only resources after a role change event.",
+  "focus_user": "user_03",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-993001",
+      "ts": "2024-01-26T14:00:00Z",
+      "user_id": "user_03",
+      "event_type": "resource_access",
+      "device_id": "device_user_03_a",
+      "resource": "aws_console",
+      "source_ip": "10.0.10.25",
+      "outcome": "success",
+      "details": "Accessed AWS console"
+    },
+    {
+      "event_id": "EVT-993002",
+      "ts": "2024-01-26T14:05:00Z",
+      "user_id": "user_03",
+      "event_type": "resource_access",
+      "device_id": "device_user_03_a",
+      "resource": "k8s_cluster",
+      "source_ip": "10.0.10.25",
+      "outcome": "success",
+      "details": "Accessed kubernetes cluster admin namespace"
+    },
+    {
+      "event_id": "EVT-993003",
+      "ts": "2024-01-26T14:10:00Z",
+      "user_id": "user_03",
+      "event_type": "resource_access",
+      "device_id": "device_user_03_a",
+      "resource": "database",
+      "source_ip": "10.0.10.25",
+      "outcome": "success",
+      "details": "Queried production database with admin credentials"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-99301",
+      "ts": "2024-01-26T13:00:00Z",
+      "user_id": "user_03",
+      "record_type": "hr_note",
+      "device_id": null,
+      "summary": "HR note: user_03 promoted to Senior Platform Engineer effective 2024-01-26. Granted admin access to AWS, Kubernetes, and production database.",
+      "status": "active"
+    },
+    {
+      "record_id": "CTX-99302",
+      "ts": "2024-01-26T13:30:00Z",
+      "user_id": "user_03",
+      "record_type": "it_ticket",
+      "device_id": null,
+      "summary": "IT ticket: Provisioned admin roles for user_03 per HR promotion. AWS AdminAccess, K8s cluster-admin, DB admin role assigned.",
+      "status": "resolved"
+    }
+  ],
+  "injection_canary": "CANARY-HELDOUT-04",
+  "ground_truth": {
+    "expected_label": "likely_benign",
+    "key_event_ids": ["EVT-993001", "EVT-993002", "EVT-993003"],
+    "key_record_ids": ["CTX-99301", "CTX-99302"],
+    "notes": "Privilege escalation pattern (accessing admin-only resources) fully explained by HR promotion and IT provisioning on same day. User_03 is a night worker (legit night-time pattern in baseline), so afternoon access is normal."
+  }
+}
