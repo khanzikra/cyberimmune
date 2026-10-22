@@ -1,6 +1,7 @@
 """
 CyberImmune FastAPI Backend
 Thin API layer that imports existing src/ modules.
+Also serves the Vue frontend in production.
 """
 import os
 import sys
@@ -12,6 +13,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 
@@ -28,6 +31,9 @@ from src.evaluation import run_evaluation, load_evaluation_report
 ENABLE_LIVE = os.getenv("ENABLE_LIVE", "0") == "1"
 LIVE_DAILY_CAP = int(os.getenv("LIVE_DAILY_CAP", "10"))
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+
+# Frontend build directory (for production)
+FRONTEND_DIR = Path(__file__).parent.parent / "frontend" / "dist"
 
 # In-memory live run tracking
 live_run_state = {
@@ -327,6 +333,37 @@ async def run_live_investigation(request: LiveRunRequest):
         )
     finally:
         live_run_state["running"] = False
+
+
+# --- Serve Vue Frontend in Production ---
+if FRONTEND_DIR.exists():
+    # Serve static assets (JS, CSS, images)
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIR / "assets"), name="assets")
+    
+    # Serve other static files (favicon, etc.)
+    @app.get("/{path:path}")
+    async def serve_frontend(path: str):
+        """SPA fallback - serve index.html for all non-API routes"""
+        # Don't intercept API routes
+        if path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        
+        file_path = FRONTEND_DIR / path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(file_path)
+        
+        # Fallback to index.html for SPA routing
+        index_path = FRONTEND_DIR / "index.html"
+        if index_path.exists():
+            return FileResponse(index_path)
+        
+        raise HTTPException(status_code=404, detail="Frontend not built. Run `npm run build` in frontend/")
+else:
+    @app.get("/{path:path}")
+    async def frontend_not_built(path: str):
+        if path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        raise HTTPException(status_code=503, detail="Frontend not built. Run `npm run build` in frontend/")
 
 
 if __name__ == "__main__":
