@@ -1,0 +1,5 @@
+# Netlify Configuration
+# Save as: frontend/public/_redirects
+
+/*  /index.html   200
+/api/*  https://your-backend-url.onrender.com/api/:splat  200
