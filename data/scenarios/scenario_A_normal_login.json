@@ -1,0 +1,41 @@
+{
+  "scenario_id": "scenario_A_normal_login",
+  "category": "test_normal_login",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate activity for user_01. A normal login occurred at a usual hour on a known device.",
+  "focus_user": "user_01",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-TEST-A-001",
+      "ts": "2024-01-22T10:00:00Z",
+      "user_id": "user_01",
+      "event_type": "login",
+      "device_id": "device_user_01_a",
+      "resource": null,
+      "source_ip": "10.0.1.100",
+      "outcome": "success",
+      "details": "User logged in successfully"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-TEST-A-001",
+      "ts": "2024-01-10T00:00:00Z",
+      "user_id": "user_01",
+      "record_type": "approved_device",
+      "device_id": "device_user_01_a",
+      "summary": "Device device_user_01_a approved for user_01",
+      "status": "active"
+    }
+  ],
+  "injection_canary": null,
+  "ground_truth": {
+    "expected_label": "no_concern",
+    "key_event_ids": ["EVT-TEST-A-001"],
+    "key_record_ids": ["CTX-TEST-A-001"],
+    "notes": "Normal login at usual hour (10:00 UTC), known device, successful outcome. No baseline rules should trigger."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "scenario_id": "scenario_C_new_device_ticket",
+  "category": "test_new_device_ticket",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate activity for user_03. A login occurred from a new device at an unusual hour, but there is an approved laptop replacement ticket.",
+  "focus_user": "user_03",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-TEST-C-001",
+      "ts": "2024-01-22T03:00:00Z",
+      "user_id": "user_03",
+      "event_type": "login",
+      "device_id": "device_user_03_new_laptop",
+      "resource": null,
+      "source_ip": "10.0.3.100",
+      "outcome": "success",
+      "details": "User logged in from new laptop"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-TEST-C-001",
+      "ts": "2024-01-20T00:00:00Z",
+      "user_id": "user_03",
+      "record_type": "it_ticket",
+      "device_id": "device_user_03_new_laptop",
+      "summary": "IT ticket: laptop_replacement for user_03. Approved new laptop device_user_03_new_laptop issued on 2024-01-20.",
+      "status": "resolved"
+    },
+    {
+      "record_id": "CTX-TEST-C-002",
+      "ts": "2024-01-15T00:00:00Z",
+      "user_id": "user_03",
+      "record_type": "approved_device",
+      "device_id": "device_user_03_a",
+      "summary": "Device device_user_03_a approved for user_03",
+      "status": "active"
+    }
+  ],
+  "injection_canary": null,
+  "ground_truth": {
+    "expected_label": "likely_benign",
+    "key_event_ids": ["EVT-TEST-C-001"],
+    "key_record_ids": ["CTX-TEST-C-001", "CTX-TEST-C-002"],
+    "notes": "Login at unusual hour (03:00 UTC) on new device 'device_user_03_new_laptop'. R1 unusual_hour and R2 new_device should trigger. However, IT ticket CTX-TEST-C-001 explains the new device (laptop replacement approved 2024-01-20). Conclusion should be 'likely_benign' with explanation that the ticket provides legitimate context."
+  }
+}

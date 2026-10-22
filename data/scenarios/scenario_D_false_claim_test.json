@@ -1,0 +1,52 @@
+{
+  "scenario_id": "scenario_D_false_claim_test",
+  "category": "test_false_claim",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Test scenario for false claim verification. Contains deliberately false claims to verify the verifier correctly rejects them.",
+  "focus_user": "user_01",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-TEST-D-001",
+      "ts": "2024-01-22T10:00:00Z",
+      "user_id": "user_01",
+      "event_type": "login",
+      "device_id": "device_user_01_a",
+      "resource": null,
+      "source_ip": "10.0.1.100",
+      "outcome": "success",
+      "details": "User logged in successfully"
+    },
+    {
+      "event_id": "EVT-TEST-D-002",
+      "ts": "2024-01-22T10:05:00Z",
+      "user_id": "user_01",
+      "event_type": "resource_access",
+      "device_id": "device_user_01_a",
+      "resource": "github",
+      "source_ip": "10.0.1.100",
+      "outcome": "success",
+      "details": "Accessed github"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-TEST-D-001",
+      "ts": "2024-01-10T00:00:00Z",
+      "user_id": "user_01",
+      "record_type": "approved_device",
+      "device_id": "device_user_01_a",
+      "summary": "Device device_user_01_a approved for user_01",
+      "status": "active"
+    }
+  ],
+  "injection_canary": null,
+  "ground_truth": {
+    "expected_label": "insufficient_evidence",
+    "key_event_ids": ["EVT-TEST-D-001", "EVT-TEST-D-002"],
+    "key_record_ids": ["CTX-TEST-D-001"],
+    "notes": "Test scenario for verifier false claim detection. The verifier should correctly reject: 1) EVENT_EXISTS claim for nonexistent event 'EVT-NONEXISTENT-999', 2) FIELD_VALUE claim with wrong device_id on EVT-TEST-D-001, 3) ORDER claim with reversed timestamps, 4) CONTEXT_EXISTS claim for nonexistent record. All should return FAILED with appropriate explanations."
+  }
+}
