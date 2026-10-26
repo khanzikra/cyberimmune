@@ -138,6 +138,41 @@ class LiveRunResponse(BaseModel):
 async def health():
     return {"status": "ok", "service": "cyberimmune-api"}
 
+@app.get("/api/debug/frontend-path")
+async def debug_frontend_path():
+    """Debug endpoint to check frontend path on Render."""
+    from pathlib import Path
+    project_root = Path(__file__).parent.parent
+    render_repo_root = Path("/opt/render/project")
+    
+    info = {
+        "file": str(__file__),
+        "project_root": str(project_root),
+        "project_root_exists": project_root.exists(),
+        "render_repo_root": str(render_repo_root),
+        "render_repo_root_exists": render_repo_root.exists(),
+    }
+    
+    if render_repo_root.exists():
+        frontend_dir = render_repo_root / "frontend" / "dist"
+    else:
+        frontend_dir = project_root / "frontend" / "dist"
+    
+    info["frontend_dir"] = str(frontend_dir)
+    info["frontend_dir_exists"] = frontend_dir.exists()
+    info["index_html_exists"] = (frontend_dir / "index.html").exists()
+    
+    # List directory contents if exists
+    if frontend_dir.exists():
+        info["contents"] = [str(p) for p in frontend_dir.iterdir()]
+    else:
+        # Check what's in project_root
+        info["project_root_contents"] = [str(p) for p in project_root.iterdir()]
+        if (project_root / "frontend").exists():
+            info["frontend_contents"] = [str(p) for p in (project_root / "frontend").iterdir()]
+    
+    return info
+
 
 @app.get("/api/scenarios", response_model=List[ScenarioSummary])
 async def list_scenarios(
