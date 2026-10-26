@@ -34,8 +34,15 @@ ENABLE_LIVE = os.getenv("ENABLE_LIVE", "0") == "1"
 LIVE_DAILY_CAP = int(os.getenv("LIVE_DAILY_CAP", "10"))
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 
-# Frontend build directory (for production)
-FRONTEND_DIR = Path(__file__).parent.parent / "frontend" / "dist"
+# Frontend build directory (for production) - handles both local and Render paths
+# Local: project_root = repo root, Render: project_root = /opt/render/project
+project_root = Path(__file__).parent.parent
+# Check if we're on Render (repo cloned to /opt/render/project)
+render_repo_root = Path("/opt/render/project")
+if render_repo_root.exists():
+    FRONTEND_DIR = render_repo_root / "frontend" / "dist"
+else:
+    FRONTEND_DIR = project_root / "frontend" / "dist"
 
 # In-memory live run tracking
 live_run_state = {
