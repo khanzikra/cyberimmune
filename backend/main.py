@@ -37,11 +37,11 @@ FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 # Frontend build directory (for production) - handles both local and Render paths
 # Local: project_root = repo root, Render: project_root varies
 project_root = Path(__file__).parent.parent
-# Check if we're on Render (repo cloned to /opt/render/project or /opt/render/project/src)
-# Try multiple possible Render paths
+# Check if we're on Render (repo cloned to /opt/render/project/src or /opt/render/project)
+# IMPORTANT: Check /opt/render/project/src FIRST since that's where Render actually clones
 possible_render_roots = [
-    Path("/opt/render/project"),
     Path("/opt/render/project/src"),
+    Path("/opt/render/project"),
 ]
 FRONTEND_DIR = None
 for render_root in possible_render_roots:
