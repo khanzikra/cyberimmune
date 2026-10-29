@@ -542,34 +542,10 @@ export default {
       }
     }
 
-    const init3DTilt = () => {
-      const cards = document.querySelectorAll('.timeline-page .kpi-card, .timeline-page .chart-card')
-      cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect()
-          const x = e.clientX - rect.left
-          const y = e.clientY - rect.top
-          const centerX = rect.width / 2
-          const centerY = rect.height / 2
-          const rotateX = (y - centerY) / 20
-          const rotateY = (centerX - x) / 20
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`
-        })
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)'
-          card.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
-        })
-        card.addEventListener('mouseenter', () => {
-          card.style.transition = 'transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1)'
-        })
-      })
-    }
-
     onMounted(async () => {
       await loadScenarios()
       await loadUsers()
       await loadTimeline()
-      init3DTilt()
     })
 
     onUnmounted(() => {
