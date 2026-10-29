@@ -38,15 +38,16 @@ FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 # Local: project_root = repo root, Render: project_root varies
 project_root = Path(__file__).parent.parent
 # Check if we're on Render (repo cloned to /opt/render/project/src or /opt/render/project)
-# IMPORTANT: Check /opt/render/project/src FIRST since that's where Render actually clones
+# IMPORTANT: Build outputs to /opt/render/project/frontend/dist (from cd ../frontend in src/)
+# Check /opt/render/project FIRST since that's where the build outputs
 possible_render_roots = [
-    Path("/opt/render/project/src"),
     Path("/opt/render/project"),
+    Path("/opt/render/project/src"),
 ]
 FRONTEND_DIR = None
 for render_root in possible_render_roots:
     candidate = render_root / "frontend" / "dist"
-    if candidate.exists():
+    if candidate.exists() and (candidate / "index.html").exists():
         FRONTEND_DIR = candidate
         break
 
