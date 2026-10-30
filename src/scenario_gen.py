@@ -542,5 +542,22 @@ def generate_all_scenarios():
     return all_scenarios
 
 
+def load_scenarios(split: str = "dev") -> List[Dict[str, Any]]:
+    """Load scenarios for a given split."""
+    scenarios = []
+    scenarios_dir = Path("data/scenarios")
+    if not scenarios_dir.exists():
+        return scenarios
+
+    for f in scenarios_dir.glob("*.json"):
+        if f.name == "all_scenarios.json":
+            continue
+        with open(f) as fh:
+            s = json.load(fh)
+            if s.get("split") == split:
+                scenarios.append(s)
+    return sorted(scenarios, key=lambda s: s["scenario_id"])
+
+
 if __name__ == "__main__":
     generate_all_scenarios()

@@ -594,3 +594,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def load_evaluation_report(split: str = "dev") -> Optional[Dict[str, Any]]:
+    """Load evaluation report from results/."""
+    import json
+    from pathlib import Path
+    report_path = Path(f"results/report_{split}.json")
+    if report_path.exists():
+        with open(report_path) as f:
+            return json.load(f)
+    # Also check final directory
+    final_path = Path(f"results/final/report_{split}.json")
+    if final_path.exists():
+        with open(final_path) as f:
+            return json.load(f)
+    return None
