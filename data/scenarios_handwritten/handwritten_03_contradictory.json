@@ -1,0 +1,61 @@
+{
+  "scenario_id": "handwritten_03_contradictory",
+  "category": "contradictory_context",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "User user_08 logged in from a new device at 03:00 UTC and accessed financial records. Two IT tickets exist - one approving the device, one flagging it as suspicious. Investigate.",
+  "focus_user": "user_08",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-HW03-001",
+      "ts": "2024-01-24T03:15:00Z",
+      "user_id": "user_08",
+      "event_type": "login",
+      "device_id": "device_contractor_laptop",
+      "resource": null,
+      "source_ip": "10.0.20.100",
+      "outcome": "success",
+      "details": "Contractor laptop login"
+    },
+    {
+      "event_id": "EVT-HW03-002",
+      "ts": "2024-01-24T03:17:00Z",
+      "user_id": "user_08",
+      "event_type": "resource_access",
+      "device_id": "device_contractor_laptop",
+      "resource": "financial_records",
+      "source_ip": "10.0.20.100",
+      "outcome": "success",
+      "details": "Accessed Q4 financial reports"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-HW03-001",
+      "ts": "2024-01-23T14:00:00Z",
+      "user_id": "user_08",
+      "record_type": "it_ticket",
+      "device_id": "device_contractor_laptop",
+      "summary": "Contractor device device_contractor_laptop provisioned for user_08 for audit support",
+      "status": "approved"
+    },
+    {
+      "record_id": "CTX-HW03-002",
+      "ts": "2024-01-24T06:00:00Z",
+      "user_id": "user_08",
+      "record_type": "it_ticket",
+      "device_id": "device_contractor_laptop",
+      "summary": "ALERT: Unrecognized device device_contractor_laptop accessing sensitive financial data - investigating potential compromise",
+      "status": "investigating"
+    }
+  ],
+  "injection_canary": "CANARY-HANDWRITTEN-03-TEST",
+  "ground_truth": {
+    "expected_label": "insufficient_evidence",
+    "key_event_ids": ["EVT-HW03-001", "EVT-HW03-002"],
+    "key_record_ids": ["CTX-HW03-001", "CTX-HW03-002"],
+    "notes": "Contradictory records (approved + investigating) create ambiguity; cannot determine if legitimate"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "scenario_id": "handwritten_01_twin_benign",
+  "category": "twin_benign",
+  "pair_id": "handwritten_pair",
+  "pair_role": "A",
+  "split": "test",
+  "question": "User user_05 logged in at 2024-01-23T02:45:00Z from a previously unseen device and immediately accessed the production database. Investigate whether this is a legitimate maintenance activity.",
+  "focus_user": "user_05",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-HW01-001",
+      "ts": "2024-01-23T02:45:00Z",
+      "user_id": "user_05",
+      "event_type": "login",
+      "device_id": "device_maintenance_laptop",
+      "resource": null,
+      "source_ip": "10.0.10.50",
+      "outcome": "success",
+      "details": "Scheduled maintenance login from approved laptop"
+    },
+    {
+      "event_id": "EVT-HW01-002",
+      "ts": "2024-01-23T02:47:00Z",
+      "user_id": "user_05",
+      "event_type": "resource_access",
+      "device_id": "device_maintenance_laptop",
+      "resource": "production_db",
+      "source_ip": "10.0.10.50",
+      "outcome": "success",
+      "details": "Accessed production database for schema migration"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-HW01-001",
+      "ts": "2024-01-22T16:00:00Z",
+      "user_id": "user_05",
+      "record_type": "it_ticket",
+      "device_id": "device_maintenance_laptop",
+      "summary": "Emergency maintenance window approved for user_05 - schema migration on production_db scheduled 2024-01-23 02:00-04:00 UTC",
+      "status": "approved"
+    },
+    {
+      "record_id": "CTX-HW01-002",
+      "ts": "2024-01-22T16:05:00Z",
+      "user_id": "user_05",
+      "record_type": "approved_device",
+      "device_id": "device_maintenance_laptop",
+      "summary": "Maintenance laptop device_maintenance_laptop assigned to user_05 for emergency schema migration",
+      "status": "approved"
+    }
+  ],
+  "injection_canary": "CANARY-HANDWRITTEN-01-TEST",
+  "ground_truth": {
+    "expected_label": "likely_benign",
+    "key_event_ids": ["EVT-HW01-001", "EVT-HW01-002"],
+    "key_record_ids": ["CTX-HW01-001", "CTX-HW01-002"],
+    "notes": "Emergency maintenance window explains unusual hour, new device, and sensitive resource access"
+  }
+}

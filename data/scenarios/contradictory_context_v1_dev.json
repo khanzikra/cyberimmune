@@ -1,0 +1,55 @@
+{
+  "scenario_id": "contradictory_context_v1_dev",
+  "category": "contradictory_context",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate the new device login for user_01 with contradictory records.",
+  "focus_user": "user_01",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-CONTRADICTORY_CONTEXT_V1_DEV1",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_01",
+      "event_type": "login",
+      "device_id": "device_user_01_new_3386",
+      "resource": null,
+      "source_ip": "10.0.179.111",
+      "outcome": "success",
+      "details": "Unusual login"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-CONTRADICTORY_CONTEXT_V1_DEV1",
+      "ts": "2024-01-21T14:00:00Z",
+      "user_id": "user_01",
+      "record_type": "it_ticket",
+      "device_id": "device_user_01_new_3386",
+      "summary": "Laptop replacement approved for user_01",
+      "status": "approved"
+    },
+    {
+      "record_id": "CTX-CONTRADICTORY_CONTEXT_V1_DEV2",
+      "ts": "2024-01-21T15:00:00Z",
+      "user_id": "user_01",
+      "record_type": "it_ticket",
+      "device_id": "device_user_01_new_3386",
+      "summary": "REJECTED: Laptop replacement for user_01 denied",
+      "status": "rejected"
+    }
+  ],
+  "injection_canary": "CANARY-CONTRADICTORY_CONTEXT-DEV-V1-76435",
+  "ground_truth": {
+    "expected_label": "insufficient_evidence",
+    "key_event_ids": [
+      "EVT-CONTRADICTORY_CONTEXT_V1_DEV1"
+    ],
+    "key_record_ids": [
+      "CTX-CONTRADICTORY_CONTEXT_V1_DEV1",
+      "CTX-CONTRADICTORY_CONTEXT_V1_DEV2"
+    ],
+    "notes": "Contradictory records (approved + rejected) create ambiguity"
+  }
+}

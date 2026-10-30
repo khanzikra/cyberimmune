@@ -1,0 +1,390 @@
+{
+  "investigation": {
+    "question": "Investigate the unusual login for user_01 on 2024-01-22T03:10:00Z from a new device accessing a rarely used resource.",
+    "claims": [
+      {
+        "claim_id": "C1",
+        "text": "Login event EVT-999001 exists for user_01 at 2024-01-22T03:10:00Z from device_new_laptop with source IP 10.0.5.50, outcome success.",
+        "claim_type": "EVENT_EXISTS",
+        "cited_event_ids": [
+          "EVT-999001"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999001"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C2",
+        "text": "The login event EVT-999001 has device_id = device_new_laptop.",
+        "claim_type": "FIELD_VALUE",
+        "cited_event_ids": [
+          "EVT-999001"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999001",
+          "field": "device_id",
+          "value": "device_new_laptop"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C3",
+        "text": "The login event EVT-999001 has timestamp = 2024-01-22T03:10:00Z.",
+        "claim_type": "FIELD_VALUE",
+        "cited_event_ids": [
+          "EVT-999001"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999001",
+          "field": "ts",
+          "value": "2024-01-22T03:10:00Z"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C4",
+        "text": "The login event EVT-999001 has source_ip = 10.0.5.50.",
+        "claim_type": "FIELD_VALUE",
+        "cited_event_ids": [
+          "EVT-999001"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999001",
+          "field": "source_ip",
+          "value": "10.0.5.50"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C5",
+        "text": "The login event EVT-999001 has outcome = success.",
+        "claim_type": "FIELD_VALUE",
+        "cited_event_ids": [
+          "EVT-999001"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999001",
+          "field": "outcome",
+          "value": "success"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C6",
+        "text": "Resource access event EVT-999002 exists for user_01 at 2024-01-22T03:12:00Z from device_new_laptop accessing aws_console, outcome success.",
+        "claim_type": "EVENT_EXISTS",
+        "cited_event_ids": [
+          "EVT-999002"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999002"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C7",
+        "text": "The resource access event EVT-999002 has resource = aws_console.",
+        "claim_type": "FIELD_VALUE",
+        "cited_event_ids": [
+          "EVT-999002"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "event_id": "EVT-999002",
+          "field": "resource",
+          "value": "aws_console"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C8",
+        "text": "Login event EVT-999001 (03:10:00Z) precedes resource access event EVT-999002 (03:12:00Z).",
+        "claim_type": "ORDER",
+        "cited_event_ids": [
+          "EVT-999001",
+          "EVT-999002"
+        ],
+        "cited_record_ids": [],
+        "structured": {
+          "first_event_id": "EVT-999001",
+          "second_event_id": "EVT-999002"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C9",
+        "text": "Device device_new_laptop is not present in the baseline known_devices list (cutoff 2024-01-21T00:00:00Z), indicating it is a new/unfamiliar device for user_01.",
+        "claim_type": "DEVICE_FAMILIARITY",
+        "cited_event_ids": [],
+        "cited_record_ids": [],
+        "structured": {
+          "user_id": "user_01",
+          "device_id": "device_new_laptop",
+          "familiar": false
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": "Baseline known_devices shows device_user_01_1, device_user_01_new_4872, device_user_01_new_5415, device_user_01_new_3068 only."
+      },
+      {
+        "claim_id": "C10",
+        "text": "IT ticket CTX-999001 approved on 2024-01-21T14:00:00Z for laptop replacement, issuing device_new_laptop to user_01.",
+        "claim_type": "CONTEXT_EXISTS",
+        "cited_event_ids": [],
+        "cited_record_ids": [
+          "CTX-999001"
+        ],
+        "structured": {
+          "record_id": "CTX-999001",
+          "user_id": "user_01",
+          "record_type": "it_ticket"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C11",
+        "text": "Approved device record CTX-999002 on 2024-01-21T14:05:00Z confirms device_new_laptop approved for user_01.",
+        "claim_type": "CONTEXT_EXISTS",
+        "cited_event_ids": [],
+        "cited_record_ids": [
+          "CTX-999002"
+        ],
+        "structured": {
+          "record_id": "CTX-999002",
+          "user_id": "user_01",
+          "record_type": "approved_device"
+        },
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C12",
+        "text": "Login hour 03:00 UTC has only 1 prior event in baseline histogram (index 3 value 1), making this hour unusual but not unprecedented.",
+        "claim_type": "INTERPRETATION",
+        "cited_event_ids": [],
+        "cited_record_ids": [],
+        "structured": {},
+        "supports": [],
+        "contradicts": [],
+        "limitations": "Baseline histogram shows hour 3 count = 1."
+      },
+      {
+        "claim_id": "C13",
+        "text": "Resource aws_console does not appear in baseline top_resources (top: salesforce 21, jira 13, gcp_console 13, confluence 13, pagerduty 13, office365 2, slack 2, bamboohr 1), indicating it is rarely used by this user.",
+        "claim_type": "INTERPRETATION",
+        "cited_event_ids": [],
+        "cited_record_ids": [],
+        "structured": {},
+        "supports": [],
+        "contradicts": [],
+        "limitations": "Baseline top_resources list does not include aws_console."
+      },
+      {
+        "claim_id": "C14",
+        "text": "Hypothesis: The new device login and rare resource access are explained by legitimate laptop replacement approved via IT ticket CTX-999001 and approved_device CTX-999002.",
+        "claim_type": "HYPOTHESIS",
+        "cited_event_ids": [],
+        "cited_record_ids": [
+          "CTX-999001",
+          "CTX-999002"
+        ],
+        "structured": {},
+        "supports": [],
+        "contradicts": [],
+        "limitations": ""
+      },
+      {
+        "claim_id": "C15",
+        "text": "Missing evidence: No prior login events from device_new_laptop before 2024-01-22T03:10:00Z (this is the first observed use).",
+        "claim_type": "MISSING_EVIDENCE",
+        "cited_event_ids": [],
+        "cited_record_ids": [],
+        "structured": {},
+        "supports": [],
+        "contradicts": [],
+        "limitations": "Query window started at 2024-01-22T00:00:00Z; baseline cutoff is 2024-01-21T00:00:00Z."
+      }
+    ],
+    "hypotheses": [
+      {
+        "hypothesis_id": "H1",
+        "description": "Legitimate laptop replacement explains the new device login and subsequent AWS console access.",
+        "supporting_claim_ids": [
+          "C10",
+          "C11",
+          "C1",
+          "C6",
+          "C8"
+        ],
+        "contradicting_claim_ids": [
+          "C9",
+          "C12",
+          "C13"
+        ]
+      }
+    ],
+    "missing_evidence": [
+      "No prior login events from device_new_laptop before 2024-01-22T03:10:00Z (first observed use).",
+      "No baseline data for aws_console access frequency (not in top_resources).",
+      "Source IP 10.0.5.50 not verified against known corporate ranges."
+    ],
+    "next_steps": [
+      "Verify source IP 10.0.5.50 belongs to expected corporate network segment.",
+      "Confirm with IT that device_new_laptop was physically delivered to user_01 before 2024-01-22T03:10:00Z.",
+      "Review aws_console access patterns for user_01 over longer period to determine if truly rare."
+    ],
+    "conclusion": {
+      "label": "likely_benign",
+      "rationale": "The new device login at an unusual hour (03:10 UTC) and access to a rarely used resource (aws_console) are explained by an approved IT ticket (CTX-999001) and approved_device record (CTX-999002) for a laptop replacement issued on 2024-01-21. The login succeeded from an internal IP (10.0.5.50) and was followed by expected resource access. While the hour and resource are deviations from baseline, a consistent legitimate explanation exists in the records."
+    }
+  },
+  "status": "success",
+  "audit_steps": [
+    {
+      "type": "user_question",
+      "question": "Investigate the unusual login for user_01 on 2024-01-22T03:10:00Z from a new device accessing a rarely used resource."
+    },
+    {
+      "type": "round_start",
+      "round": 1
+    },
+    {
+      "type": "model_response",
+      "summary": {
+        "has_content": true,
+        "has_tool_calls": false,
+        "tool_count": 0
+      }
+    },
+    {
+      "type": "tool_call",
+      "tool": "get_baseline",
+      "args": {
+        "user_id": "user_01"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "get_baseline",
+      "ok": true,
+      "row_count": 1
+    },
+    {
+      "type": "round_start",
+      "round": 2
+    },
+    {
+      "type": "model_response",
+      "summary": {
+        "has_content": true,
+        "has_tool_calls": false,
+        "tool_count": 0
+      }
+    },
+    {
+      "type": "tool_call",
+      "tool": "query_events",
+      "args": {
+        "user_id": "user_01",
+        "start": "2024-01-22T00:00:00Z",
+        "end": "2024-01-22T06:00:00Z",
+        "limit": 50
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "query_events",
+      "ok": true,
+      "row_count": 2
+    },
+    {
+      "type": "round_start",
+      "round": 3
+    },
+    {
+      "type": "model_response",
+      "summary": {
+        "has_content": true,
+        "has_tool_calls": false,
+        "tool_count": 0
+      }
+    },
+    {
+      "type": "tool_call",
+      "tool": "get_context",
+      "args": {
+        "user_id": "user_01",
+        "start": "2024-01-20T00:00:00Z",
+        "end": "2024-01-23T00:00:00Z",
+        "limit": 20
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "get_context",
+      "ok": true,
+      "row_count": 2
+    },
+    {
+      "type": "round_start",
+      "round": 4
+    },
+    {
+      "type": "model_response",
+      "summary": {
+        "has_content": true,
+        "has_tool_calls": false,
+        "tool_count": 0
+      }
+    },
+    {
+      "type": "round_start",
+      "round": 5
+    },
+    {
+      "type": "model_response",
+      "summary": {
+        "has_content": true,
+        "has_tool_calls": false,
+        "tool_count": 0
+      }
+    }
+  ],
+  "rounds_used": 5,
+  "retrieved_event_ids": [
+    "EVT-999001",
+    "EVT-999002"
+  ],
+  "retrieved_record_ids": [
+    "CTX-999001",
+    "CTX-999002"
+  ],
+  "model_name": "nvidia/nemotron-3-ultra-550b-a55b",
+  "system_prompt_version": "v1"
+}

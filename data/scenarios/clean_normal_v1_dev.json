@@ -1,0 +1,33 @@
+{
+  "scenario_id": "clean_normal_v1_dev",
+  "category": "clean_normal",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "dev",
+  "question": "Investigate the routine resource access for user_01.",
+  "focus_user": "user_01",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-CLEAN_NORMAL_V1_DEV1",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_01",
+      "event_type": "resource_access",
+      "device_id": "device_user_01_1",
+      "resource": "email",
+      "source_ip": "10.0.179.111",
+      "outcome": "success",
+      "details": "Normal resource access"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-CLEAN_NORMAL-DEV-V1-76435",
+  "ground_truth": {
+    "expected_label": "no_concern",
+    "key_event_ids": [
+      "EVT-CLEAN_NORMAL_V1_DEV1"
+    ],
+    "key_record_ids": [],
+    "notes": "Known device, usual hour, common resource - fully normal"
+  }
+}

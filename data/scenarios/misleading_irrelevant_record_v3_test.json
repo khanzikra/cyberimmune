@@ -1,0 +1,43 @@
+{
+  "scenario_id": "misleading_irrelevant_record_v3_test",
+  "category": "misleading_irrelevant_record",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "Investigate the new device login for user_03.",
+  "focus_user": "user_03",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-MISLEADING_IRRELEVANT_RECORD_V3_TEST1",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_03",
+      "event_type": "login",
+      "device_id": "device_user_03_new_6839",
+      "resource": null,
+      "source_ip": "10.0.177.136",
+      "outcome": "success",
+      "details": "Unusual login"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-MISLEADING_IRRELEVANT_RECORD_V3_TEST1",
+      "ts": "2024-01-21T14:00:00Z",
+      "user_id": "user_03",
+      "record_type": "approved_device",
+      "device_id": "device_user_03_other_6647",
+      "summary": "Device device_user_03_other_6647 approved for user_03",
+      "status": "approved"
+    }
+  ],
+  "injection_canary": "CANARY-MISLEADING_IRRELEVANT_RECORD-TEST-V3-65502",
+  "ground_truth": {
+    "expected_label": "unexplained",
+    "key_event_ids": [
+      "EVT-MISLEADING_IRRELEVANT_RECORD_V3_TEST1"
+    ],
+    "key_record_ids": [],
+    "notes": "Irrelevant approved_device for different device does not explain anomaly"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "scenario_id": "twin_benign_v1_dev",
+  "category": "twin_benign",
+  "pair_id": "twin_benign_pair",
+  "pair_role": "A",
+  "split": "dev",
+  "question": "Investigate the unusual login for user_01 on 2024-01-21T00:00:00Z from a new device accessing a rarely used resource.",
+  "focus_user": "user_01",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-TWIN_BENIGN_V1_DEV1",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_01",
+      "event_type": "login",
+      "device_id": "device_user_01_new_3386",
+      "resource": null,
+      "source_ip": "10.0.179.111",
+      "outcome": "success",
+      "details": "Login from new device at 2024-01-21T03:10:00Z"
+    },
+    {
+      "event_id": "EVT-TWIN_BENIGN_V1_DEV2",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_01",
+      "event_type": "resource_access",
+      "device_id": "device_user_01_new_8528",
+      "resource": "zoom",
+      "source_ip": "10.0.179.111",
+      "outcome": "success",
+      "details": "Accessed rare resource"
+    }
+  ],
+  "context_records": [
+    {
+      "record_id": "CTX-TWIN_BENIGN_V1_DEV1",
+      "ts": "2024-01-21T14:00:00Z",
+      "user_id": "user_01",
+      "record_type": "it_ticket",
+      "device_id": "device_user_01_new_3386",
+      "summary": "IT ticket: user_01 received new device_user_01_new_3386 on 2024-01-21",
+      "status": "approved"
+    },
+    {
+      "record_id": "CTX-TWIN_BENIGN_V1_DEV2",
+      "ts": "2024-01-21T14:05:00Z",
+      "user_id": "user_01",
+      "record_type": "approved_device",
+      "device_id": "device_user_01_new_3386",
+      "summary": "New device device_user_01_new_3386 approved for user_01",
+      "status": "approved"
+    }
+  ],
+  "injection_canary": "CANARY-TWIN_BENIGN-DEV-V1-76435",
+  "ground_truth": {
+    "expected_label": "likely_benign",
+    "key_event_ids": [
+      "EVT-TWIN_BENIGN_V1_DEV1",
+      "EVT-TWIN_BENIGN_V1_DEV2"
+    ],
+    "key_record_ids": [
+      "CTX-TWIN_BENIGN_V1_DEV1",
+      "CTX-TWIN_BENIGN_V1_DEV2"
+    ],
+    "notes": "Laptop replacement explains new device, time, and resource access"
+  }
+}

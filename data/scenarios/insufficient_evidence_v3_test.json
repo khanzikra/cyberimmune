@@ -1,0 +1,33 @@
+{
+  "scenario_id": "insufficient_evidence_v3_test",
+  "category": "insufficient_evidence",
+  "pair_id": null,
+  "pair_role": null,
+  "split": "test",
+  "question": "Investigate the new device login for user_03 with limited baseline.",
+  "focus_user": "user_03",
+  "baseline_cutoff": "2024-01-21T00:00:00Z",
+  "injected_events": [
+    {
+      "event_id": "EVT-INSUFFICIENT_EVIDENCE_V3_TEST1",
+      "ts": "2024-01-21T00:00:00Z",
+      "user_id": "user_03",
+      "event_type": "login",
+      "device_id": "device_user_03_new_6839",
+      "resource": null,
+      "source_ip": "10.0.177.136",
+      "outcome": "success",
+      "details": "New device login with insufficient baseline"
+    }
+  ],
+  "context_records": [],
+  "injection_canary": "CANARY-INSUFFICIENT_EVIDENCE-TEST-V3-65502",
+  "ground_truth": {
+    "expected_label": "insufficient_evidence",
+    "key_event_ids": [
+      "EVT-INSUFFICIENT_EVIDENCE_V3_TEST1"
+    ],
+    "key_record_ids": [],
+    "notes": "Baseline has < 20 logins; rules cannot reliably assess"
+  }
+}

@@ -2,4 +2,6 @@ openai
 python-dotenv
 pydantic
 pandas
+streamlit
+plotly
 pytest
