@@ -362,7 +362,7 @@ const sampleLogs = reactive([
     timestamp: '2024-01-20T20:00:00Z',
     mitre: 'T1558.003',
   },
-],
+]
 
 const search = ref('')
 const selectedLogs = ref([])
@@ -370,11 +370,6 @@ const selectedLog = ref(null)
 const investigationNotes = ref('')
 const snackbar = ref(false)
 const snackbarMessage = ref('')
-
-const selectedLogs = computed(() => {
-  if (!selectedLog.value) return []
-  return sampleLogs.filter(log => selectedLogs.value.includes(log.id))
-}
 
 const getSeverityColor = (severity) => {
   switch (severity) {
