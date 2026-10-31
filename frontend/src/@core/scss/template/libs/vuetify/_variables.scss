@@ -269,15 +269,6 @@ $font-family-custom: "Inter", sans-serif, -apple-system, blinkmacsystemfont, "Se
   // 👉 Slider
   $slider-thumb-hover-opacity: var(--v-activated-opacity) !default,
 
-  // 👉 Switch
-  $switch-inset-track-width: 1.875rem !default,
-  $switch-inset-track-height: 1.125rem !default,
-  $switch-inset-thumb-height: 0.875rem !default,
-  $switch-inset-thumb-width: 0.875rem !default,
-  $switch-inset-thumb-off-height: 0.875rem !default,
-  $switch-track-opacity: 1 !default,
-  $switch-track-background: rgba(var(--v-theme-on-surface), var(--v-focus-opacity)) !default,
-
   // 👉 Tooltip
   $tooltip-background-color: rgb(var(--v-tooltip-background)) !default,
   $tooltip-text-color: rgb(var(--v-theme-surface)) !default,
